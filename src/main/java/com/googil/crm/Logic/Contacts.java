@@ -3,26 +3,28 @@ package com.googil.crm.Logic;
 import com.googil.crm.Data.Client;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class Contacts {
 
-    private ArrayList<Client> clients = new ArrayList<>();
+    private static List<Client> clients = new ArrayList<>();
 
-    private void createClient(String name, String surname, int age, String email, int phoneNumber){
+    private static void createClient(String name, String surname, int age, String email, int phoneNumber){
         clients.add(new Client(name, surname, age, email, phoneNumber));
 
     }
 
-    private void removeClient(String email){
-        clients = new ArrayList<>(clients
-                .stream()
-                .filter(i -> !i.getEmail().equals(email))
-                .collect(Collectors.toList()));
+    private static void removeClient(String email){
+        clients.removeIf(i -> i.getEmail().equals(email));
 
     }
 
-    private void editClient(){
-        //Edit a client
+    private static void editClient(String name, String surname, int age, String email, int phoneNumber){
+        for (int i = 0; i < clients.size(); i++) {
+            if (clients.get(i).getEmail().equals(email)){
+                clients.get(i).editClient(name, surname, age, email, phoneNumber);
+            }
+        }
     }
 }
